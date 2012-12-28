@@ -1,0 +1,50 @@
+%div.well
+  -if @users.present?
+    - @users.each do |search|
+      %div.well{:style =>"width:150px;"}
+        %h5
+          = link_to search.ngo_name
+          %br
+          = search.mission
+          %br
+            %span.icon-map-marker
+              = search.headquarter.address.city
+              ,
+              = search.headquarter.address.state
+
+          %br
+        %span.icon-tags
+          -if (search.disaster_relief == true)
+            Disaster Relief
+          %br
+          -if (search.animals == true)
+            Animals
+          %br
+          -if (search.education == true)
+            Education
+          %br
+          -if(search.humanitarian_aid ==true)
+            Humanitarian
+          %br
+          -if(search.youth == true)
+            Youth
+          %br
+          -if(search.enterprise == true)
+            Enterprise
+
+          %br
+          -if(search.people == true)
+            People
+          %br
+          -if(search.medical_foreign == true)
+            Medical(Foreign)
+          %br
+          -if(search.medical_local == true)
+            Medical(Local)
+          %br
+          -if(search.technology == true)
+            Technology
+
+  -else
+    %h4
+      It looks like you're not following any Causes yet. Here are some we recommend:"

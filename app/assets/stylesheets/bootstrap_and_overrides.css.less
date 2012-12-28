@@ -1,0 +1,77 @@
+@import "twitter/bootstrap/bootstrap";
+@import "twitter/bootstrap/responsive";
+body { padding-top: 60px; }
+// Set the correct sprite paths
+@iconSpritePath: asset-path("twitter/bootstrap/glyphicons-halflings");
+@iconWhiteSpritePath: asset-path("twitter/bootstrap/glyphicons-halflings-white");
+
+// Set the Font Awesome (Font Awesome is default. You can disable by commenting below lines)
+// Note: If you use asset_path() here, your compiled boostrap_and_overrides.css will not
+//       have the proper paths. So for now we use the absolute path.
+@fontAwesomeEotPath: asset-path("fontawesome-webfont.eot");
+@fontAwesomeWoffPath: asset-path("fontawesome-webfont.woff");
+@fontAwesomeTtfPath: asset-path("fontawesome-webfont.ttf");
+@fontAwesomeSvgPath: asset-path("fontawesome-webfont.svg");
+@fontAwesomeEotPath_iefix: asset-path("fontawesome-webfont.eot#iefix");
+// Font Awesome
+@import "fontawesome";
+
+// Glyphicons
+//@import "twitter/bootstrap/sprites.less";
+
+// Your custom LESS stylesheets goes here
+//
+// Since bootstrap was imported above you have access to its mixins which
+// you may use and inherit here
+//
+// If you'd like to override bootstrap's own variables, you can do so here as well
+// See http://twitter.github.com/bootstrap/customize.html#variables for their names and documentation
+//
+// Example:
+// @linkColor: #ff0000;
+@bodyBackground:        #89E7FA;
+@linkColor:         #89E7FA;
+@linkColorHover:    darken(@linkColor, 15);
+.row-width
+{
+width:100px;
+margin-top: 0px;
+margin-left:10px;
+//font-size: 15px;
+margin-right: 20px;
+}
+.brand {
+    background: url(logo1.png) no-repeat ;
+    height: 50px;
+    width: 220px;
+    margin-left: -6px !important;
+    margin-right: 0px !important;
+
+}
+.row1-width {
+  width:140px;
+  margin-top: 0px !important;
+}
+
+#user_picture {
+//  opacity:0;
+//  width:0px;
+//  filter: alpha(opacity=0);
+}
+.upload_link {
+  left:0;
+}
+#fileupload .files {
+  float:left;
+  width:200px;
+  margin:0px;
+  padding:0px;
+  list-style-type: none;
+}
+.social-icons,
+.friendly-url
+{
+  margin-top:50px;
+  float:left;
+  width:100%;
+}

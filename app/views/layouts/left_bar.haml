@@ -1,0 +1,9 @@
+- content_for :content do
+  .well.sidebar-nav
+    %span
+      %br
+        %h4.icon-comment
+          Categories
+        = render "home/category"
+
+= render :template => "layouts/application"

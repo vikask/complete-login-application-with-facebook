@@ -1,0 +1,10 @@
+.well.sidebar-nav
+  .row.offset1
+    %h1 Welcome
+
+  .row.offset1.input-append
+
+  .row.offset6
+    - if !current_user
+      .btn.btn-warning
+        %a{:href => "/users/sign_up"} Join me

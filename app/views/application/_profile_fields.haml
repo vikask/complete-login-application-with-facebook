@@ -1,0 +1,154 @@
+%legend
+%row
+  %span
+    %h4 Image
+  %span
+  %p
+    Upload a photo or use a photo from one of your social media accounts.
+%row
+  %span
+    = form_for @user, :url => change_picture_path, :validate => true, :html => { :multipart => true, :id => "fileupload"  } do |f|
+      %span.pull-left
+        %ul.files{"data-target" => "#modal-gallery", "data-toggle" => "modal-gallery"}
+        / The table listing the files available for upload/download
+        = render 'application/file_upload', :id => "fileupload", :t_up => 'template-upload', :t_down => 'template-download'
+        %span.btn.btn-success.fileinput-button.calign.w-100
+          %i.icon-plus.icon-white
+          -if @user.picture.present?
+            %span.text-orange Change
+          -else
+            %span.text-orange Add Image
+          = f.hidden_field :id, :value => @user.id
+          = f.file_field :picture
+      %span.pull-left
+        %div.social-icons
+          %span
+            %a.btn.btn-primary{:href => "/change_avatar/facebook"}
+              %i.icon-facebook
+          %span
+            %a.btn.btn-info{:href => "/change_avatar/twitter"}
+              %i.icon-twitter
+          %span
+            %a.btn{:href => "/change_avatar/google_oauth2"}
+              %i.icon-google-plus
+          %span
+            %a.btn.btn-info{:href => "/change_avatar/linkedin"}
+              %i.icon-linkedin
+        %div.friendly-url
+          %span
+            .span
+              %h4
+                Profile Info
+          %span
+            .span
+              %p
+                =Rails.configuration.host
+            = f.text_field :slug, :placeholder => "Public profile path"
+          %div.row
+            %span.offset2.pull-right
+              = f.submit :Save, :class => "btn-large btn-info"
+-content_for :js do
+  :javascript
+    $(document).ready(function() {
+      call_upload('fileupload', #{@user.id}, 'template-upload', 'template-download')
+      function call_upload(id, u_id, u_temp, d_temp) {
+      // Initialize the jQuery File Upload widget:
+        $('#fileupload').fileupload({autoUpload: true, uploadTemplateId: u_temp, downloadTemplateId: d_temp, done: uploadDone, destroy: destroyDone, add: uploadPreview});
+        // Load existing files:
+        $.getJSON($('#fileupload').prop('action'), function (files) {
+          var fu = $('#fileupload').data('fileupload'),template;
+          fu._adjustMaxNumberOfFiles(-files.length);
+          console.log(files);
+
+          template = fu._renderDownload(files).appendTo($('#fileupload .files'));
+          console.log(template);
+          // Force reflow:
+          fu._reflow = fu._transition && template.length && template[0].offsetWidth;
+          template.addClass('in');
+          $('#loading').remove();
+      });
+      }
+
+      function uploadDone (e, data) {
+        var that = $(this).data('fileupload'),
+            template;
+        if (data.context) {
+          data.context.each(function (index) {
+              var file = ($.isArray(data.result) && data.result[index]) || {error: 'emptyResult'};
+              if (file.error) {
+                  that._adjustMaxNumberOfFiles(1);
+              }
+              that._transition($(this)).done(function (){
+                  var node = $(this);
+                  $('#fileupload .template-download').remove();
+                  $('#fileupload .btn-success span').html('Change');
+                  template = that._renderDownload([file]).replaceAll(node);
+                  that._forceReflow(template);
+                  that._transition(template).done(
+                      function (){
+                        data.context = $(this);
+                        that._trigger('completed', e, data);
+                      }
+                  );
+              }
+              );
+          });
+        } else {
+            template = that._renderDownload(data.result).appendTo(that.options.filesContainer);
+            that._forceReflow(template);
+            that._transition(template).done(
+              function (){ alert('function3'); {
+                data.context = $(this);
+                that._trigger('completed', e, data);
+                }
+              }
+            );
+        }
+
+      }
+     // Callback for file deletion:
+
+      function destroyDone(e, data) {
+          var that = $(this).data('fileupload');
+          if (data.url) {
+              $.ajax(data);
+              that._adjustMaxNumberOfFiles(1);
+          }
+          that._transition(data.context).done(
+              function () {
+                  $(this).remove();
+                  $('#fileupload .btn-success span').html('Add Image');
+                  that._trigger('destroyed', e, data);
+              }
+          );
+      }
+          // The add callback is invoked as soon as files are added to the fileupload
+          // widget (via file input selection, drag & drop or add API call).
+          // See the basic file upload widget for more information:
+           function uploadPreview (e, data) {
+              var that = $(this).data('fileupload'),
+                  options = that.options,
+                  files = data.files;
+              $(this).fileupload('process', data).done(function () {
+                  that._adjustMaxNumberOfFiles(-files.length);
+                  data.isAdjusted = true;
+                  data.files.valid = data.isValidated = that._validate(files);
+                  data.context = that._renderUpload(files).data('data', data);
+                  options.filesContainer[
+                      options.prependFiles ? 'prepend' : 'append'
+                  ](data.context);
+                  that._renderPreviews(files, data.context);
+                  that._forceReflow(data.context);
+                  that._transition(data.context).done(
+            function () {
+                if ((that._trigger('added', e, data) !== false) &&
+                  (options.autoUpload || data.autoUpload) &&
+                  data.autoUpload !== false && data.isValidated) {
+                  $('#fileupload .template-download').hide();
+                 data.submit();
+                }
+            }
+                  );
+              });
+          }
+    });

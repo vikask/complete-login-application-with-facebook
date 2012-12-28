@@ -1,0 +1,37 @@
+-social_media = {"facebook"=> "icon-facebook", "google_oauth2" => "icon-google-plus", "twitter" => "icon-twitter", "linkedin" => "icon-linkedin" }
+%div.well
+  %div.tabs-left
+    %ul#tabs.nav.nav-tabs{"data-tabs" => "tabs"}
+      %li{:class => params[:tab] == 'account' || params[:tab].nil? ? 'active': 'inactive'}
+        %a{:href => "/users/edit?tab=account"} Account
+      %li{:class => params[:tab] == 'social_media'? 'active': 'inactive'}
+        %a{ :href => "/users/edit?tab=social_media"} Social Media
+      %li{:class => params[:tab] == 'profile'? 'active': 'inactive'}
+        %a{ :href => "/users/edit?tab=profile"} Profile
+
+    #my-tab-content.tab-content
+      #account{:class => params[:tab] == 'account' || !params[:tab] ? 'tab-pane active' : 'tab-pane'}
+        %h2 Account
+
+        = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :validate => true, :html => { :method => :put }, :validate => true) do |f|
+          = devise_error_messages!
+          = render 'account_fields', :f => f
+      #social_media{:class => params[:tab] == 'social_media' ? 'tab-pane active' : 'tab-pane'}
+        %h2 Social Media
+        = render 'social_media_fields', :user => @user, :social_media => social_media
+      #profile{:class => params[:tab] == 'profile' ? 'tab-pane active' : 'tab-pane'}
+        %h2 Profile
+        = render 'profile_fields'
+
+:javascript
+  function password_enabled(elem) {
+    if ($(elem).val() == '') {
+      $('#user_password').attr('disabled', 'disabled');
+      $('#user_password_confirmation').attr('disabled', 'disabled');
+    }
+    else {
+      $('#user_password').removeAttr('disabled');
+      $('#user_password_confirmation').removeAttr('disabled');
+    }
+
+  }

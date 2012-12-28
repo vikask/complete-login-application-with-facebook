@@ -1,0 +1,68 @@
+%div.well
+  %div.tabs-left
+    %ul#tabs.nav.nav-tabs{"data-tabs" => "tabs"}
+      %li{:class => params[:tab] == 'Manage_NGO' || params[:tab].nil? ? 'active': 'inactive'}
+        %a{:href => "?tab=Manage_NGO"} Manage NGO
+      %li{:class => params[:tab] == 'Pending_NGO'? 'active': 'inactive'}
+        %a{ :href => "?tab=Pending_NGO"} Pending NGO
+
+    #my-tab-content.tab-content
+      #manage_ngo{:class => params[:tab] == 'Manage_NGO' || !params[:tab] ? 'tab-pane active' : 'tab-pane'}
+        %div.row
+          %div.span7
+            %legend.span4
+              Manage Non Profit Account
+            %p.span.offset1
+              %a{ :href => "#myModal",:role => "link",  "data-toggle" => "modal", :class => 'btn btn-warning'} Enroll New NGO
+              / Modal
+              #myModal.modal.hide.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+                .modal-header
+                  %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+                  %h3#myModalLabel New Non Profit
+                .modal-body
+                  %form#ngo_form{:action => "/ngo",:method => "get"}
+                    %fieldset
+                      %label NGO Name
+                      %input{:placeholder => "name", :type => "text",:name => "ngo_name", :id => "ngo_name"}
+                      %div#error_message{:style => "display:none;"}
+                        %p.text-error
+                          NGO's name should be Alphabetic.
+
+                    .modal-footer
+                      %a{"aria-hidden" => "true", "data-dismiss" => "modal"} Cancel
+                      %button.btn-large.btn-primary{:type => "submit", :onclick => "return validate_name()"} Next
+
+
+          %div.span6
+            %div.span4
+              %form.form-search{:method => "GET"}
+                .input-append
+                  %input.span2.search-query{:type => "text", :placeholder => "search", :name => "search", :value => params[:search]}
+                    %button.btn{:type => "submit"} GO!
+        -if @organizations.empty?
+          No organizations found
+        -else
+          %div.span6
+            %ul
+              - @organizations.each do |organization|
+                %li
+                  = link_to organization.ngo_name, "ngo/#{organization.id}"
+
+
+
+
+      #pending_ngo{:class => params[:tab] == 'Pending_NGO' ? 'tab-pane active'  : 'tab-pane'}
+        %legend
+          Pending NGO
+        %p TO DO..
+:javascript
+  function validate_name() {
+    var alphaExp = /^[a-zA-Z\s]*$/;
+    if($("#ngo_name").val().match(alphaExp) && trim($("#ngo_name").val()) !== '')  {
+      $('#error_message').hide();
+      return true;
+    } else {
+      $('#error_message').show();
+      return false;
+    }
+  }

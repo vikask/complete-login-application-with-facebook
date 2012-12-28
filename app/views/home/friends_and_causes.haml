@@ -1,0 +1,20 @@
+%div.well
+  %ul#tabs.nav.nav-tabs{"data-tabs" => "tabs"}
+    %li.active
+      %a{"data-toggle" => "tab", :href => "#causes"}
+        %h5
+          Causes you Follow
+    %li
+      %a{"data-toggle" => "tab", :href => "#friends"}
+        %h5
+          Your Friends
+  #my-tab-content.tab-content
+    #causes.tab-pane.active
+      = render "home/causes"
+    #friends.tab-pane
+      %h4
+        coming soon
+  :javascript
+    jQuery(document).ready(function ($) {
+        $('#tabs').tab();
+    });

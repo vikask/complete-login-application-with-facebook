@@ -1,0 +1,43 @@
+%div.well
+  %div.tabs-left
+    %ul#tabs.nav.nav-tabs{"data-tabs" => "tabs"}
+      %li{:class => params[:tab] == 'organization' || params[:tab].nil? ? 'active': 'inactive'}
+        %a{:href => "?tab=organization"} Organization
+      %li{:class => params[:tab] == 'headquarter'? 'active': 'inactive'}
+        %a{ :href => "?tab=headquarter"} Headquarters & Branches
+      %li{:class => params[:tab] == 'partner'? 'active': 'inactive'}
+        %a{ :href => "?tab=partner"} Partners & Donations
+
+
+
+    #my-tab-content.tab-content
+      #organization{:class => params[:tab] == 'organization' || !params[:tab] ? 'tab-pane active' : 'tab-pane'}
+        -if @organization.id.nil?
+          %h2
+            Organization
+        -else
+          %h2
+            = @organization.ngo_name
+        %p
+          Enter details about your registered non-profit organization.
+        %legend
+        = render 'organizations/form'
+
+      #hq_branches{:class => params[:tab] == 'headquarter' ? 'tab-pane active' : 'tab-pane'}
+        %h3
+          Headquarters And Branches
+        %p
+          Please provide additional information about your organization.
+        %legend
+        = render 'headquarters/form'
+
+      #partner{:class => params[:tab] == 'partner' ? 'tab-pane active' : 'tab-pane' }
+        %h3
+          Partners & Donations
+        %legend
+        = render 'partners/form'
+
+
+
+
+

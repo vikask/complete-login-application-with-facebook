@@ -1,0 +1,24 @@
+= render "home/search"
+- if @organization.present?
+  - @organization.each do |org|
+    %div.well{:style =>"width:150px; float:left;margin-left:15px;"}
+      %h5
+        = link_to org.ngo_name, "ngo/#{org.id}"
+      %br
+      = org.mission
+      %br
+      %span.icon-map-marker
+        = org.headquarter.address.city
+        ,
+        = org.headquarter.address.state
+      %br
+      %span.icon-tags
+        -org.categories.each do |category|
+          = category.name
+          %br
+-else
+  No organizations found
+
+
+
+

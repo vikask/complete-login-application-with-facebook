@@ -1,0 +1,23 @@
+%seciton.add-another
+  .row
+    .span
+    -if @user.authentications
+      -unless @user.authentications.empty?
+        %p
+          %strong
+            Connected Account
+          -for authentication in @user.authentications
+            -social_media.delete("#{authentication.provider}")
+            .well.span
+              = image_tag "omniauth/#{authentication.provider}_64.png", :size => "32x32"
+              = authentication.provider_name.titleize
+              = link_to "X", authentication, :confirm => 'Are you sure you want to remove this authentication option?', :method => :delete, :class => "remove"
+
+-else
+  .row
+    .span4
+      %p
+        %strong
+          Connect More
+      %div{:style => "font-size: 50px;"}
+        = render "open_auth", :social_media => social_media

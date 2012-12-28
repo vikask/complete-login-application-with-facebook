@@ -1,0 +1,10 @@
+%div.well
+  %h4 Find a Cause
+  %span
+    =form_tag('/friends_and_causes', :method => "get", :name => "search_form") do
+      = text_field_tag :search, params[:search], :placeholder => "Search", :class => "icon-search"
+      .hidden_button.pull-right.offset0
+        = submit_tag "Search", :class => "btn btn-primary"
+  .row
+    .span{:style =>"margin-top:-30px;"}
+      Search by Name location,or Category

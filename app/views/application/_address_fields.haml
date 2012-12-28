@@ -1,0 +1,19 @@
+.row
+  .field
+    .span
+      = f.label :address
+      = f.text_field :address
+.row
+  .field
+    .span
+      = f.label :city
+      = f.text_field :city
+.row
+  .field
+    .span
+      = f.label :state
+      = f.select :state, options_for_select( ["--Select--"] + us_states, f.object.state)
+    .span
+      .field
+        = f.label :zip
+        = f.number_field :zip

@@ -1,0 +1,25 @@
+%div.span7
+  %div.span2
+    Your Details
+  %div.span2
+    = f.label :full_name
+    = f.text_field :name, :class => "span2"
+  %div.span2
+    = f.label :email
+    = f.email_field :email, :class => "span2"
+%div.span7
+  %div.span2
+    Password
+  %div.span4
+    = f.label :current_password
+    = f.password_field :current_password, :autocomplete => "off", :class => "span2", :onkeyup => "return password_enabled(this)"
+  %div.span2
+
+  %div.span2
+    = f.label :password
+    = f.password_field :password, :autocomplete => "off", :disabled => "disabled", :class => "span2"
+  %div.span2
+    = f.label :password_confirmation
+    = f.password_field :password_confirmation, :disabled => "disabled", :class => "span2"
+  %div.pull-right
+    = f.submit "Update", :class => "btn btn-primary"

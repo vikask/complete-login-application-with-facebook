@@ -1,0 +1,22 @@
+/ The drop down menu
+-social_media = {"facebook"=> "icon-facebook", "google_oauth2" => "icon-google-plus", "twitter" => "icon-twitter", "linkedin" => "icon-linkedin" }
+%ul.nav.pull-right
+  %li.divider-horizontal
+  %li.dropdown
+    %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+      Sign In
+      %strong.caret
+    .dropdown-menu{:style => "padding: 15px; padding-bottom: 0px;"}
+      / Login by social sites
+      = render 'open_auth', :social_media => social_media
+      %div
+        %p
+        %span or
+      / Login form here
+      = form_tag "/users/sign_in" do
+        = label_tag "Email"
+        = text_field_tag "user[email]",nil, :placeholder => 'Email'
+        = label_tag "Password"
+        = password_field_tag "user[password]", nil, :placeholder => 'Password'
+        = button_tag "Sign In",:class=>"btn btn-primary", :type => :submit, 'data-disable-with' => "wait..."
+

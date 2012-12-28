@@ -1,0 +1,135 @@
+%legend
+.row
+  .span
+    %h4
+      Branch Name and Address
+.row
+  .span
+    .field
+      = f.label :b_l_name
+      = f.text_field :b_l_name
+    .field
+      = f.fields_for :address do |address|
+        = render 'address_fields', :f => address
+.row
+  .span
+    %h4
+      Leadership
+.row
+  = f.fields_for :leadership do |leadership|
+    = render 'leadership_fields', :f => leadership
+.row
+  .span
+    %h4
+      Branch Contact Information
+.row
+  -i=1
+  = f.fields_for :contacts do |contact|
+    = render 'contacts_fields', :f => contact, :i => i
+    -i=i+1
+.row
+  .span
+    %h4
+      Branch Partnership,Interns, and Community Outreach
+.row
+  .span
+    = f.label :collaborate
+    .span
+      = f.radio_button :collaborate, 1, :checked => (f.object.collaborate == true ? "checked" : "")
+    .span
+      = f.label :collaborate, "Yes", :value => 1
+    .span
+      = f.radio_button :collaborate, 0, :checked => (f.object.collaborate == false ? "checked" : "")
+    .span
+      = f.label :collaborate, "No", :value => 0
+.row
+  .span
+    .field
+      = f.label :org_name
+      = f.text_area :org_name, :class => "span5" , :rows => 3
+.row
+  .span
+    = f.label :b_partner
+    .span
+      = f.radio_button :b_partner, 1, :checked => (f.object.b_partner == true ? "checked" : "")
+    .span
+      = f.label :b_partner, "Yes", :value => 1
+    .span
+      = f.radio_button :b_partner, 0, :checked => (f.object.b_partner == false ? "checked" : "")
+    .span
+      = f.label :b_partner, "No", :value => 0
+.row
+  .span
+    .field
+      = f.label :b_name
+      = f.text_area :b_name, :class => "span5" , :rows => 3
+.row
+  .span
+    = f.label :sep_board
+    .span
+      = f.radio_button :sep_board, 1, :checked => (f.object.sep_board == true ? "checked" : "")
+    .span
+      = f.label :sep_board, "Yes", :value => 1
+    .span
+      = f.radio_button :sep_board, 0, :checked => (f.object.sep_board == false ? "checked" : "")
+    .span
+      = f.label :sep_board, "No", :value => 0
+.row
+  .span
+    = f.label :facility
+    .span
+      = f.radio_button :facility, 1, :checked => (f.object.facility == true ? "checked" : "")
+    .span
+      = f.label :facility, "Yes", :value => 1
+    .span
+      = f.radio_button :facility, 0, :checked => (f.object.facility == false ? "checked" : "")
+    .span
+      = f.label :facility, "No", :value => 0
+.row
+  .span
+    = f.label :intern
+    .span
+      = f.radio_button :intern, 1, :checked => (f.object.intern == true ? "checked" : "")
+    .span
+      = f.label :intern, "Yes", :value => 1
+    .span
+      = f.radio_button :intern, 0, :checked => (f.object.intern == false ? "checked" : "")
+    .span
+      = f.label :intern, "No", :value => 0
+.row
+  .span
+    .field
+      = f.label :t_intern
+      = f.text_field :t_intern
+.row
+  .span
+    .field
+      = f.label :intern_work
+      = f.text_area :intern_work, :class => "span5" , :rows => 3
+.row
+  .span
+    = f.label :filling_intern
+    .span
+      = f.radio_button :filling_intern, 1, :checked => (f.object.filling_intern == true ? "checked" : "")
+    .span
+      = f.label :filling_intern, "Yes", :value => 1
+    .span
+      = f.radio_button :filling_intern, 0, :checked => (f.object.filling_intern == false ? "checked" : "")
+    .span
+      = f.label :filling_intern, "No", :value => 0
+.row
+  .span
+    = f.label :outreach
+    .span
+      = f.radio_button :outreach, 1, :checked => (f.object.outreach == true ? "checked" : "")
+    .span
+      = f.label :outreach, "Yes", :value => 1
+    .span
+      = f.radio_button :outreach, 0, :checked => (f.object.outreach == false ? "checked" : "")
+    .span
+      = f.label :outreach, "No", :value => 0
+.row
+  .span
+    .field
+      = f.label :community
+      = f.select :community, options_for_select( ["--Select--"] + how_frequently, f.object.community)

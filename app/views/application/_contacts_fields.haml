@@ -1,0 +1,21 @@
+.span
+  .field
+    .row
+      .span
+        %p
+          ="Contact #{i}"
+    .row
+      .span
+        .field
+          = f.label :full_name
+          = f.text_field :name
+    .row
+      .span
+        .field
+          = f.label :Phone_number
+          = f.number_field :phone
+    .row
+      .span
+        .field
+        = f.label :Email_address
+        = f.text_field :email
